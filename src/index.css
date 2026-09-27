@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Poppins', 'Inter', system-ui, sans-serif;
+
+  /* Brand (Blue Wing Ads) */
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+
+  /* Accent (for bento highlight tiles) */
+  --color-accent-violet: #8b5cf6;
+  --color-accent-teal: #14b8a6;
+  --color-accent-amber: #f59e0b;
+
+  /* Semantic status colors, deliberately distinct from brand blue */
+  --color-status-green: #10b981;
+  --color-status-green-bg: #ecfdf5;
+  --color-status-green-border: #a7f3d0;
+  --color-status-yellow: #f59e0b;
+  --color-status-yellow-bg: #fffbeb;
+  --color-status-yellow-border: #fde68a;
+  --color-status-red: #f43f5e;
+  --color-status-red-bg: #fff1f2;
+  --color-status-red-border: #fecdd3;
+
+  --radius-bento: 1.5rem;
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-pop: pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+:root {
+  --background: #f4f5fb;
+  --foreground: #12131a;
+  --card: #ffffff;
+  --card-foreground: #12131a;
+  --muted: #f0f1f8;
+  --muted-foreground: #6b7085;
+  --border: #e7e8f2;
+  --dock: #ffffff;
+  --dock-foreground: #4b4f61;
+  --dock-active: #12131a;
+  --dock-active-foreground: #ffffff;
+  --ring: #3b82f6;
+}
+
+.dark {
+  --background: #0b0d14;
+  --foreground: #e7e8f2;
+  --card: #12141d;
+  --card-foreground: #e7e8f2;
+  --muted: #1a1d29;
+  --muted-foreground: #8b8fa3;
+  --border: #22252f;
+  --dock: #12141d;
+  --dock-foreground: #9297ac;
+  --dock-active: #2563eb;
+  --dock-active-foreground: #ffffff;
+  --ring: #60a5fa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-dock: var(--dock);
+  --color-dock-foreground: var(--dock-foreground);
+  --color-dock-active: var(--dock-active);
+  --color-dock-active-foreground: var(--dock-active-foreground);
+  --color-ring: var(--ring);
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
