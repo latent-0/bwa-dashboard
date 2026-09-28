@@ -16,7 +16,7 @@ export function AgentOrbLite({ size, onClick, title = 'Ask the assistant' }: { s
         width: size,
         height: size,
         background:
-          'radial-gradient(circle at 34% 28%, #f4ecff 0%, #c09dfd 16%, #7a2dfd 42%, #5f01fb 68%, #2b0173 100%)',
+          'radial-gradient(circle at 32% 26%, #ffffff 0%, #e4d3ff 10%, #c09dfd 22%, #5f01fb 42%, #1c0a3d 66%, #0b0d1b 100%)',
         filter: 'drop-shadow(0 4px 14px rgba(95,1,251,0.5))',
       }}
     />

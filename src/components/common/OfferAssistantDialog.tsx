@@ -125,7 +125,7 @@ export function OfferAssistantDialog({
       <DialogContent className="flex max-h-[85vh] max-w-md flex-col">
         <DialogHeader className="flex-row items-center gap-3 space-y-0">
           <span className="h-9 w-9 shrink-0 overflow-hidden rounded-full">
-            <Orb colors={['#9c5cfd', '#5f01fb']} seed={7} className="h-full w-full" />
+            <Orb colors={['#ffffff', '#c09dfd']} bgColor="#0b0d1b" seed={7} className="h-full w-full" />
           </span>
           <div>
             <DialogTitle>Assistant</DialogTitle>

@@ -22,7 +22,7 @@ export function AgentOrb({
           'drop-shadow(0 4px 18px rgba(95,1,251,0.5)) drop-shadow(0 0 10px rgba(122,45,253,0.35))',
       }}
     >
-      <Orb colors={['#9c5cfd', '#5f01fb']} seed={7} className="h-full w-full" />
+      <Orb colors={['#ffffff', '#c09dfd']} bgColor="#0b0d1b" seed={7} className="h-full w-full" />
     </button>
   )
 }

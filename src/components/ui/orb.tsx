@@ -8,6 +8,8 @@ export type AgentState = null | 'thinking' | 'listening' | 'talking'
 type OrbProps = {
   colors?: [string, string]
   colorsRef?: React.RefObject<[string, string]>
+  /** The dark base the fluid streaks move against (both ends of the ramp). */
+  bgColor?: string
   resizeDebounce?: number
   seed?: number
   agentState?: AgentState
@@ -24,6 +26,7 @@ type OrbProps = {
 export function Orb({
   colors = ['#CADCFC', '#A0B9D1'],
   colorsRef,
+  bgColor = '#0b0d1b',
   resizeDebounce = 100,
   seed,
   agentState = null,
@@ -49,6 +52,7 @@ export function Orb({
         <Scene
           colors={colors}
           colorsRef={colorsRef}
+          bgColor={bgColor}
           seed={seed}
           agentState={agentState}
           volumeMode={volumeMode}
@@ -67,6 +71,7 @@ export function Orb({
 function Scene({
   colors,
   colorsRef,
+  bgColor,
   seed,
   agentState,
   volumeMode,
@@ -79,6 +84,7 @@ function Scene({
 }: {
   colors: [string, string]
   colorsRef?: React.RefObject<[string, string]>
+  bgColor: string
   seed?: number
   agentState: AgentState
   volumeMode: 'auto' | 'manual'
@@ -210,6 +216,7 @@ function Scene({
     return {
       uColor1: new THREE.Uniform(new THREE.Color(initialColorsRef.current[0])),
       uColor2: new THREE.Uniform(new THREE.Color(initialColorsRef.current[1])),
+      uBgColor: new THREE.Uniform(new THREE.Color(bgColor)),
       uOffsets: { value: offsets },
       uPerlinTexture: new THREE.Uniform(perlinNoiseTexture),
       uTime: new THREE.Uniform(0),
@@ -219,7 +226,7 @@ function Scene({
       uOutputVolume: new THREE.Uniform(0),
       uOpacity: new THREE.Uniform(0),
     }
-  }, [perlinNoiseTexture, offsets])
+  }, [perlinNoiseTexture, offsets, bgColor])
 
   return (
     <mesh ref={circleRef}>
@@ -263,6 +270,7 @@ uniform float uInverted;
 uniform float uOffsets[7];
 uniform vec3 uColor1;
 uniform vec3 uColor2;
+uniform vec3 uBgColor;
 uniform float uInputVolume;
 uniform float uOutputVolume;
 uniform float uOpacity;
@@ -387,10 +395,10 @@ void main() {
     float totalRingAlpha = max(ringAlpha1, ringAlpha2);
     vec3 ringColor = vec3(1.0);
     color.rgb = 1.0 - (1.0 - color.rgb) * (1.0 - ringColor * totalRingAlpha);
-    vec3 color1 = vec3(0.0, 0.0, 0.0);
+    vec3 color1 = uBgColor;
     vec3 color2 = uColor1;
     vec3 color3 = uColor2;
-    vec3 color4 = vec3(1.0, 1.0, 1.0);
+    vec3 color4 = uBgColor;
     float luminance = mix(color.r, 1.0 - color.r, uInverted);
     color.rgb = colorRamp(luminance, color1, color2, color3, color4);
     color.a *= uOpacity;
