@@ -23,6 +23,14 @@ export function formatDate(iso: string | null): string {
   }).format(date)
 }
 
+export function getHostname(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return url
+  }
+}
+
 export function timeAgo(iso: string): string {
   const diffMs = Date.now() - new Date(iso).getTime()
   const days = Math.floor(diffMs / (1000 * 60 * 60 * 24))

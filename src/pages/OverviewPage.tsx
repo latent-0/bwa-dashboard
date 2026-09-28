@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { RevenueByBrandChart } from '@/components/charts/RevenueByBrandChart'
 import { StatusDistributionChart } from '@/components/charts/StatusDistributionChart'
 import { KpiCard } from '@/components/common/KpiCard'
+import { OfferSpotlight } from '@/components/common/OfferSpotlight'
 import { PageHeader } from '@/components/common/PageHeader'
 import { StatusPill } from '@/components/common/StatusPill'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -110,12 +111,20 @@ export function OverviewPage() {
     [offersWithStatus],
   )
 
+  const spotlight = useMemo(() => {
+    if (nextToUnlock.length > 0) return nextToUnlock[0]
+    const liveEntry = recentlyUpdated.find((entry) => entry.status === 'green')
+    return liveEntry ?? offersWithStatus[0]
+  }, [nextToUnlock, recentlyUpdated, offersWithStatus])
+
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
         title="Overview"
         description="One screen for the whole operation. Everything a spreadsheet cannot compute for you, done automatically."
       />
+
+      {spotlight && <OfferSpotlight offer={spotlight.offer} status={spotlight.status} />}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {VALUE_PROPS.map((item, i) => (

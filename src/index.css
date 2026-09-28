@@ -23,6 +23,18 @@
   --color-accent-teal: #14b8a6;
   --color-accent-amber: #f59e0b;
 
+  /* Burgundy, paired with brand blue as the two-tone accent system */
+  --color-burgundy-50: #fdf2f4;
+  --color-burgundy-100: #fce7ea;
+  --color-burgundy-200: #f7d0d8;
+  --color-burgundy-300: #efaab8;
+  --color-burgundy-400: #e17a92;
+  --color-burgundy-500: #ce4d6c;
+  --color-burgundy-600: #9f2c47;
+  --color-burgundy-700: #7f2039;
+  --color-burgundy-800: #611a2e;
+  --color-burgundy-900: #4a1526;
+
   /* Semantic status colors, deliberately distinct from brand blue */
   --color-status-green: #10b981;
   --color-status-green-bg: #ecfdf5;
