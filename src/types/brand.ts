@@ -6,6 +6,7 @@ export interface Brand {
   websiteUp: boolean
   jeffReviewed: boolean
   verticalsCovered: string[]
+  note: string | null
 }
 
 export interface BrandPriority {

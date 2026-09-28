@@ -10,7 +10,8 @@ export const brands: Brand[] = [
     "buyers": null,
     "websiteUp": true,
     "jeffReviewed": false,
-    "verticalsCovered": []
+    "verticalsCovered": [],
+    "note": null
   },
   {
     "name": "Christian Insurance",
@@ -26,7 +27,8 @@ export const brands: Brand[] = [
       "Life Insurance",
       "Final Expense",
       "Health Insurance"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "Debt Center",
@@ -37,7 +39,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Debt Settlement"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "Final Expense Store",
@@ -48,7 +51,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Final Expense"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "First Legal",
@@ -59,7 +63,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Legal"
-    ]
+    ],
+    "note": "Site Down"
   },
   {
     "name": "Home Savers",
@@ -73,7 +78,8 @@ export const brands: Brand[] = [
       "Pet Insurance",
       "Home Insurance",
       "Health Insurance"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "Patriot Insurance",
@@ -87,7 +93,8 @@ export const brands: Brand[] = [
       "Pet Insurance",
       "Home Insurance",
       "Life Insurance"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "Prime Health Clinic",
@@ -98,7 +105,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "ACA Insurance"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "US Saving Center",
@@ -107,7 +115,8 @@ export const brands: Brand[] = [
     "buyers": "QuinStreet",
     "websiteUp": false,
     "jeffReviewed": false,
-    "verticalsCovered": []
+    "verticalsCovered": [],
+    "note": null
   },
   {
     "name": "Home Service Live",
@@ -116,7 +125,8 @@ export const brands: Brand[] = [
     "buyers": "Blue Ink Digital \nBlue Fire Leads - pending paperwork",
     "websiteUp": false,
     "jeffReviewed": false,
-    "verticalsCovered": []
+    "verticalsCovered": [],
+    "note": null
   },
   {
     "name": "Easy Loan Center",
@@ -125,7 +135,8 @@ export const brands: Brand[] = [
     "buyers": null,
     "websiteUp": false,
     "jeffReviewed": false,
-    "verticalsCovered": []
+    "verticalsCovered": [],
+    "note": null
   },
   {
     "name": "Refi LLC",
@@ -136,7 +147,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Refi"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "USA Addiction",
@@ -147,7 +159,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Addiction"
-    ]
+    ],
+    "note": "404"
   },
   {
     "name": "Home Security Live",
@@ -158,7 +171,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Home Security"
-    ]
+    ],
+    "note": "Site Down"
   },
   {
     "name": "Greenback Loans",
@@ -169,7 +183,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Loans"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "EZ Coverage",
@@ -186,7 +201,8 @@ export const brands: Brand[] = [
       "Roofing",
       "Solar",
       "Windows"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "Flight Finder Pro",
@@ -197,7 +213,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Flights"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "Greenback Loans",
@@ -208,7 +225,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Loans"
-    ]
+    ],
+    "note": "Site Down"
   },
   {
     "name": "Medicare Quote Pro",
@@ -219,7 +237,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Medicare"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "Pest Away",
@@ -230,7 +249,8 @@ export const brands: Brand[] = [
     "jeffReviewed": false,
     "verticalsCovered": [
       "Pest Control"
-    ]
+    ],
+    "note": null
   },
   {
     "name": "Senior's Guide",
@@ -239,7 +259,8 @@ export const brands: Brand[] = [
     "buyers": "QuinStreet",
     "websiteUp": true,
     "jeffReviewed": false,
-    "verticalsCovered": []
+    "verticalsCovered": [],
+    "note": "Site Down"
   },
   {
     "name": "USA Quote",
@@ -248,7 +269,8 @@ export const brands: Brand[] = [
     "buyers": null,
     "websiteUp": false,
     "jeffReviewed": false,
-    "verticalsCovered": []
+    "verticalsCovered": [],
+    "note": "Site Down"
   },
   {
     "name": "USA TV Network",
@@ -257,7 +279,8 @@ export const brands: Brand[] = [
     "buyers": null,
     "websiteUp": false,
     "jeffReviewed": false,
-    "verticalsCovered": []
+    "verticalsCovered": [],
+    "note": "Site Down"
   },
   {
     "name": "US Saving Center",
@@ -266,6 +289,7 @@ export const brands: Brand[] = [
     "buyers": "QuinStreet",
     "websiteUp": false,
     "jeffReviewed": false,
-    "verticalsCovered": []
+    "verticalsCovered": [],
+    "note": "Site Down"
   }
 ]

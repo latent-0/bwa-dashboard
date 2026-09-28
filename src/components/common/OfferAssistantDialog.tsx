@@ -2,6 +2,7 @@ import { Loader2, Send } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { OrbErrorBoundary } from '@/components/common/OrbErrorBoundary'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
@@ -125,7 +126,19 @@ export function OfferAssistantDialog({
       <DialogContent className="flex max-h-[85vh] max-w-md flex-col">
         <DialogHeader className="flex-row items-center gap-3 space-y-0">
           <span className="h-9 w-9 shrink-0 overflow-hidden rounded-full">
-            <Orb colors={['#ffffff', '#c09dfd']} bgColor="#0b0d1b" seed={7} className="h-full w-full" />
+            <OrbErrorBoundary
+              fallback={
+                <div
+                  className="h-full w-full"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 32% 26%, #ffffff 0%, #e4d3ff 10%, #c09dfd 22%, #5f01fb 42%, #1c0a3d 66%, #0b0d1b 100%)',
+                  }}
+                />
+              }
+            >
+              <Orb colors={['#ffffff', '#c09dfd']} bgColor="#0b0d1b" seed={7} className="h-full w-full" />
+            </OrbErrorBoundary>
           </span>
           <div>
             <DialogTitle>Assistant</DialogTitle>

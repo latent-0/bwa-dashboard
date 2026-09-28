@@ -76,8 +76,12 @@ export function BrandsPage() {
                   <TableCell>
                     {brand.websiteUp ? (
                       <Check className="h-4 w-4 text-status-green" />
+                    ) : brand.note ? (
+                      <span className="rounded-full bg-status-red-bg px-2 py-0.5 text-xs font-medium text-status-red">
+                        {brand.note}
+                      </span>
                     ) : (
-                      <X className="h-4 w-4 text-status-red" />
+                      <X className="h-4 w-4 text-muted-foreground/40" />
                     )}
                   </TableCell>
                   <TableCell>

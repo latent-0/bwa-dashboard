@@ -11,18 +11,23 @@ import {
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
+import { ProductionStageChart } from '@/components/charts/ProductionStageChart'
 import { RevenueByBrandChart } from '@/components/charts/RevenueByBrandChart'
 import { StatusDistributionChart } from '@/components/charts/StatusDistributionChart'
 import { KpiCard } from '@/components/common/KpiCard'
 import { OfferCard } from '@/components/common/OfferCard'
 import { OfferSpotlight } from '@/components/common/OfferSpotlight'
 import { PageHeader } from '@/components/common/PageHeader'
+import { SiteAlertsCard } from '@/components/common/SiteAlertsCard'
 import { StatusPill } from '@/components/common/StatusPill'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useOffers } from '@/context/OffersContext'
+import { brands } from '@/data/brands'
 import { computeOfferStatus, missingSignals } from '@/lib/status'
 import { formatCurrency, timeAgo } from '@/lib/utils'
 import type { OfferStatus } from '@/types/offer'
+
+const STAGE_ORDER = ['Approved', 'Mir Working', 'Jeff Review', 'Pending', 'Revision Pending', 'Needs Revision', 'Not set']
 
 const VALUE_PROPS = [
   {
@@ -112,6 +117,18 @@ export function OverviewPage() {
     [offersWithStatus],
   )
 
+  const productionStageData = useMemo(() => {
+    const counts = new Map<string, number>()
+    offers.forEach((o) => {
+      const key = o.productionStage ?? 'Not set'
+      counts.set(key, (counts.get(key) ?? 0) + 1)
+    })
+    return STAGE_ORDER.filter((stage) => counts.has(stage)).map((stage) => ({
+      stage,
+      count: counts.get(stage)!,
+    }))
+  }, [offers])
+
   const spotlight = useMemo(() => {
     if (nextToUnlock.length > 0) return nextToUnlock[0]
     const liveEntry = recentlyUpdated.find((entry) => entry.status === 'green')
@@ -146,6 +163,8 @@ export function OverviewPage() {
           </Card>
         ))}
       </div>
+
+      <SiteAlertsCard brands={brands} />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KpiCard label="Total Offers" value={offers.length} icon={ListChecks} />
@@ -246,12 +265,22 @@ export function OverviewPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
-        <Card className="xl:col-span-2">
+        <Card>
           <CardHeader>
             <CardTitle className="text-base font-semibold text-foreground">Revenue Potential by Brand</CardTitle>
           </CardHeader>
           <CardContent>
             <RevenueByBrandChart data={revenueByBrand} />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base font-semibold text-foreground">Production Pipeline</CardTitle>
+            <p className="text-xs text-muted-foreground">Where every video stands right now.</p>
+          </CardHeader>
+          <CardContent>
+            <ProductionStageChart data={productionStageData} />
           </CardContent>
         </Card>
 
