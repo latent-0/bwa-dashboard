@@ -1,9 +1,9 @@
-import { Sparkles } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { Orb } from '@/components/ui/orb'
 import { missingSignals } from '@/lib/status'
 import type { Offer, OfferStatus } from '@/types/offer'
 
@@ -37,14 +37,8 @@ export function OfferAssistantDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader className="flex-row items-center gap-3 space-y-0">
-          <span
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
-            style={{
-              background:
-                'radial-gradient(circle at 34% 28%, #f4ecff 0%, #c09dfd 16%, #7a2dfd 42%, #5f01fb 68%, #2b0173 100%)',
-            }}
-          >
-            <Sparkles className="h-4 w-4 text-white/90" />
+          <span className="h-9 w-9 shrink-0 overflow-hidden rounded-full">
+            <Orb colors={['#9c5cfd', '#5f01fb']} seed={7} className="h-full w-full" />
           </span>
           <div>
             <DialogTitle>Assistant</DialogTitle>
