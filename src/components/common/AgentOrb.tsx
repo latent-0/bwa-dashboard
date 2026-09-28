@@ -14,11 +14,12 @@ export function AgentOrb({
       type="button"
       onClick={onClick}
       title={title}
-      className="group relative flex shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-card transition-transform duration-300 hover:scale-105 active:scale-95"
+      className="group relative flex shrink-0 items-center justify-center transition-transform duration-300 hover:scale-105 active:scale-95"
       style={{
         width: size,
         height: size,
-        boxShadow: '0 0 0 1px rgba(95,1,251,0.15), 0 8px 20px -4px rgba(95,1,251,0.55)',
+        filter:
+          'drop-shadow(0 4px 18px rgba(95,1,251,0.5)) drop-shadow(0 0 10px rgba(122,45,253,0.35))',
       }}
     >
       <Orb colors={['#9c5cfd', '#5f01fb']} seed={7} className="h-full w-full" />

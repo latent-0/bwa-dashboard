@@ -2,9 +2,10 @@ import type { ReactNode } from 'react'
 
 /**
  * The dark "hero" block used on offer cards: a near-black base with a
- * glowing violet accent (matching the brand palette), a crisp divider where
- * it meets the card body, and a socket disc that punches a clean circular
- * gap at the seam for whatever orb/badge sits on top.
+ * glowing violet accent (matching the brand palette) and a crisp divider
+ * where it meets the card body. The orb sits free, straddling that seam
+ * with no container disc behind it, dark hero above and light body below
+ * showing straight through its transparent edges.
  */
 export function HeroNotch({
   heightClass,
@@ -21,8 +22,6 @@ export function HeroNotch({
   topRight?: ReactNode
   badge?: ReactNode
 }) {
-  const socketSize = avatarSize + Math.max(14, avatarSize * 0.28)
-  const socketHalf = socketSize / 2
   const avatarHalf = avatarSize / 2
 
   return (
@@ -39,10 +38,6 @@ export function HeroNotch({
       </div>
 
       <div className="relative flex justify-center">
-        <div
-          className="absolute rounded-full bg-card shadow-[0_6px_16px_-4px_rgba(11,13,27,0.35)]"
-          style={{ top: -socketHalf, width: socketSize, height: socketSize }}
-        />
         <div className="absolute z-10" style={{ top: -avatarHalf, width: avatarSize, height: avatarSize }}>
           {orb}
         </div>

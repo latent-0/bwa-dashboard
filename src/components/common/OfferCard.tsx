@@ -8,7 +8,7 @@ import { STATUS_META } from '@/lib/status'
 import { cn, getHostname } from '@/lib/utils'
 import type { Offer, OfferStatus } from '@/types/offer'
 
-import { AgentOrb } from './AgentOrb'
+import { AgentOrbLite } from './AgentOrbLite'
 import { HeroNotch } from './HeroNotch'
 import { OfferAssistantDialog } from './OfferAssistantDialog'
 import { SignalDot } from './SignalIndicator'
@@ -25,7 +25,7 @@ export function OfferCard({ offer, status }: { offer: Offer; status: OfferStatus
       <HeroNotch
         heightClass="h-14"
         avatarSize={48}
-        orb={<AgentOrb size={48} onClick={() => setAssistantOpen(true)} />}
+        orb={<AgentOrbLite size={48} onClick={() => setAssistantOpen(true)} />}
         topLeft={
           <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-white/15 text-white backdrop-blur">
             <Radio className="h-3 w-3" />
