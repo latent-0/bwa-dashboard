@@ -11,7 +11,7 @@ export function AgentOrbLite({ size, onClick, title = 'Ask the assistant' }: { s
       type="button"
       onClick={onClick}
       title={title}
-      className="group relative shrink-0 animate-pulse rounded-full transition-transform duration-300 hover:scale-105 active:scale-95"
+      className="group relative shrink-0 rounded-full transition-transform duration-300 hover:scale-105 active:scale-95"
       style={{
         width: size,
         height: size,
