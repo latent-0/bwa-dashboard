@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { RevenueByBrandChart } from '@/components/charts/RevenueByBrandChart'
 import { StatusDistributionChart } from '@/components/charts/StatusDistributionChart'
 import { KpiCard } from '@/components/common/KpiCard'
+import { OfferCard } from '@/components/common/OfferCard'
 import { OfferSpotlight } from '@/components/common/OfferSpotlight'
 import { PageHeader } from '@/components/common/PageHeader'
 import { StatusPill } from '@/components/common/StatusPill'
@@ -222,34 +223,27 @@ export function OverviewPage() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base font-semibold text-foreground">Status Board by Brand</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-5">
-          {brandGroups.map((group) => (
-            <div key={group.brand}>
-              <div className="mb-2 flex items-center justify-between">
-                <p className="text-sm font-medium">{group.brand}</p>
-                <p className="text-xs text-muted-foreground">{group.items.length} campaigns</p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {group.items.map(({ offer, status }) => (
-                  <Link
-                    key={offer.id}
-                    to="/inventory"
-                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-sm"
-                    title={offer.campaign}
-                  >
-                    <StatusPill status={status} className="border-0 bg-transparent p-0" />
-                    <span className="max-w-[10rem] truncate">{offer.campaign}</span>
-                  </Link>
-                ))}
-              </div>
+      <div className="flex flex-col gap-6">
+        <div>
+          <h2 className="font-heading text-lg font-semibold">All Offers</h2>
+          <p className="text-sm text-muted-foreground">
+            Every campaign as a card. Click a signal dot to toggle it, click Manage for the full record.
+          </p>
+        </div>
+        {brandGroups.map((group) => (
+          <div key={group.brand}>
+            <div className="mb-3 flex items-center justify-between px-1">
+              <h3 className="font-heading text-sm font-semibold">{group.brand}</h3>
+              <p className="text-xs text-muted-foreground">{group.items.length} campaigns</p>
             </div>
-          ))}
-        </CardContent>
-      </Card>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {group.items.map(({ offer, status }) => (
+                <OfferCard key={offer.id} offer={offer} status={status} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <Card className="xl:col-span-2">
