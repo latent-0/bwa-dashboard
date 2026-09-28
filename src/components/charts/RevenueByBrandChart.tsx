@@ -6,8 +6,8 @@ export function RevenueByBrandChart({ data }: { data: { brand: string; total: nu
       <BarChart data={data} margin={{ left: -20, top: 8 }} barCategoryGap="28%">
         <defs>
           <linearGradient id="revenueBarFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#3b82f6" stopOpacity={1} />
-            <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.55} />
+            <stop offset="0%" stopColor="#5f01fb" stopOpacity={1} />
+            <stop offset="100%" stopColor="#5f01fb" stopOpacity={0.55} />
           </linearGradient>
         </defs>
         <CartesianGrid vertical={false} stroke="var(--color-border)" strokeDasharray="4 4" />

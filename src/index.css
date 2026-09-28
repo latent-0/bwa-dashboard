@@ -6,17 +6,20 @@
   --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Poppins', 'Inter', system-ui, sans-serif;
 
-  /* Brand (Blue Wing Ads) */
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
-  --color-brand-900: #1e3a8a;
+  /* Brand: vivid violet, AI/cybersecurity palette (#FFFFFF, #5F01FB, #514AB5, #0B0D1B) */
+  --color-brand-50: #f4ecff;
+  --color-brand-100: #ede0ff;
+  --color-brand-200: #dcc4fe;
+  --color-brand-300: #c09dfd;
+  --color-brand-400: #9c5cfd;
+  --color-brand-500: #7a2dfd;
+  --color-brand-600: #5f01fb;
+  --color-brand-700: #4a01c9;
+  --color-brand-800: #3a0199;
+  --color-brand-900: #2b0173;
+
+  --color-muted-violet: #514ab5;
+  --color-ink: #0b0d1b;
 
   /* Accent (for bento highlight tiles) */
   --color-accent-violet: #8b5cf6;
@@ -82,9 +85,9 @@
   --border: #e7e8f2;
   --dock: #ffffff;
   --dock-foreground: #4b4f61;
-  --dock-active: #12131a;
+  --dock-active: #0b0d1b;
   --dock-active-foreground: #ffffff;
-  --ring: #3b82f6;
+  --ring: #5f01fb;
 }
 
 .dark {
@@ -97,9 +100,9 @@
   --border: #22252f;
   --dock: #12141d;
   --dock-foreground: #9297ac;
-  --dock-active: #2563eb;
+  --dock-active: #5f01fb;
   --dock-active-foreground: #ffffff;
-  --ring: #60a5fa;
+  --ring: #9c5cfd;
 }
 
 @theme inline {

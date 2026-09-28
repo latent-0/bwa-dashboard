@@ -1,4 +1,5 @@
 import { ExternalLink, Phone, Radio, User, Video } from 'lucide-react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Card } from '@/components/ui/card'
@@ -7,11 +8,14 @@ import { STATUS_META, missingSignals } from '@/lib/status'
 import { cn, getHostname } from '@/lib/utils'
 import type { Offer, OfferStatus } from '@/types/offer'
 
+import { AgentOrb } from './AgentOrb'
 import { HeroNotch } from './HeroNotch'
+import { OfferAssistantDialog } from './OfferAssistantDialog'
 import { SignalTile } from './SignalIndicator'
 
 export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferStatus }) {
   const { offers, updateOffer } = useOffers()
+  const [assistantOpen, setAssistantOpen] = useState(false)
   const hasBuyer = Boolean(offer.pioneerBuyerName || offer.pioneerBuyerLink)
   const missing = missingSignals(offer)
   const meta = STATUS_META[status]
@@ -26,7 +30,7 @@ export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferS
         <HeroNotch
           heightClass="h-32"
           avatarSize={72}
-          initial={offer.brand.charAt(0)}
+          orb={<AgentOrb size={72} onClick={() => setAssistantOpen(true)} />}
           topLeft={
             <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15 text-white backdrop-blur">
               <Radio className="h-4 w-4" />
@@ -133,6 +137,13 @@ export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferS
           </p>
         </Card>
       </div>
+
+      <OfferAssistantDialog
+        offer={offer}
+        status={status}
+        open={assistantOpen}
+        onOpenChange={setAssistantOpen}
+      />
     </div>
   )
 }
