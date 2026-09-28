@@ -30,8 +30,9 @@ export function SplitOrbCard({
 }) {
   const avatarHalf = avatarSize / 2
   const notchRadius = avatarHalf + Math.max(10, avatarSize * 0.18)
+  const feather = Math.max(14, avatarSize * 0.3)
   const notchMask = (edge: '0%' | '100%') =>
-    `radial-gradient(circle at 50% ${edge}, transparent ${notchRadius}px, black ${notchRadius + 1}px)`
+    `radial-gradient(circle at 50% ${edge}, transparent ${Math.max(0, notchRadius - feather * 0.4)}px, black ${notchRadius + feather}px)`
 
   return (
     <div className="relative flex flex-col" style={{ gap: gapPx }}>
