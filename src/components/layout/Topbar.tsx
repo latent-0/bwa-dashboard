@@ -9,7 +9,6 @@ import { navItems } from './nav-config'
 
 function usePageTitle() {
   const { pathname } = useLocation()
-  if (pathname.startsWith('/coming-soon')) return 'More Tabs'
   const match = navItems.find((item) => (item.end ? pathname === item.to : pathname.startsWith(item.to)))
   return match?.label ?? 'Dashboard'
 }

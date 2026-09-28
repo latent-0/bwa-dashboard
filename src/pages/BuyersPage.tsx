@@ -1,74 +1,62 @@
 import { Clock } from 'lucide-react'
 
-import { Badge } from '@/components/ui/badge'
+import { LinkChip } from '@/components/common/LinkChip'
+import { PageHeader } from '@/components/common/PageHeader'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { PageHeader } from '@/components/common/PageHeader'
-import { affiliatePayouts, affiliates } from '@/data/affiliates'
-import { buyers } from '@/data/buyers'
 import { useOffers } from '@/context/OffersContext'
-import { formatCurrency } from '@/lib/utils'
-import type { BuyerPipelineStage } from '@/types/buyer'
-
-const affiliateById = Object.fromEntries(affiliates.map((a) => [a.id, a]))
-
-const STAGE_LABEL: Record<BuyerPipelineStage, string> = {
-  mapping: 'Buyer Mapping',
-  outreach: 'Outreach',
-  terms: 'Commercial Terms',
-  active: 'Active',
-}
-
-const STAGE_VARIANT: Record<BuyerPipelineStage, 'muted' | 'default' | 'outline'> = {
-  mapping: 'muted',
-  outreach: 'outline',
-  terms: 'outline',
-  active: 'default',
-}
 
 export function BuyersPage() {
   const { offers } = useOffers()
-  const offerById = Object.fromEntries(offers.map((o) => [o.id, o]))
+  const withBuyer = offers.filter((o) => o.pioneerBuyerName || o.pioneerBuyerLink)
+  const withAffiliatePayout = offers.filter((o) => o.affiliatePayoutLink)
 
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
         title="Buyers & Payouts"
-        description="Who buys our calls, on what pricing model, and what we pay affiliates who send us traffic."
+        description="Real pioneer buyers and affiliate payout terms, pulled straight from the Inventory Draft sheet."
       />
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-foreground">Buyers</CardTitle>
+          <CardTitle className="text-foreground">Pioneer Buyers</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Buyer</TableHead>
-                <TableHead>Offers</TableHead>
-                <TableHead>Pricing Model</TableHead>
-                <TableHead>Exclusion Criteria</TableHead>
-                <TableHead>Pipeline Stage</TableHead>
+                <TableHead>Brand</TableHead>
+                <TableHead>Campaign</TableHead>
+                <TableHead>Deal Notes</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {buyers.map((buyer) => (
-                <TableRow key={buyer.id}>
-                  <TableCell className="font-medium">{buyer.name}</TableCell>
-                  <TableCell className="whitespace-normal">
-                    {buyer.offerIds.map((id) => offerById[id]?.campaign).filter(Boolean).join(', ')}
+              {withBuyer.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={4} className="py-8 text-center text-muted-foreground">
+                    No pioneer buyers set yet.
                   </TableCell>
-                  <TableCell>
-                    {buyer.pricingModel === 'per_call_dynamic' ? 'Dynamic per-call' : 'Fixed per zip'}
+                </TableRow>
+              )}
+              {withBuyer.map((offer) => (
+                <TableRow key={offer.id}>
+                  <TableCell className="font-medium">
+                    {offer.pioneerBuyerName ? (
+                      offer.pioneerBuyerLink ? (
+                        <LinkChip href={offer.pioneerBuyerLink} label={offer.pioneerBuyerName} />
+                      ) : (
+                        offer.pioneerBuyerName
+                      )
+                    ) : (
+                      <LinkChip href={offer.pioneerBuyerLink!} label="Buyer sheet" />
+                    )}
                   </TableCell>
+                  <TableCell>{offer.brand}</TableCell>
+                  <TableCell className="max-w-xs whitespace-normal">{offer.campaign}</TableCell>
                   <TableCell className="max-w-xs whitespace-normal text-muted-foreground">
-                    {buyer.exclusionCriteria ?? 'None'}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={STAGE_VARIANT[buyer.pipelineStage]}>
-                      {STAGE_LABEL[buyer.pipelineStage]}
-                    </Badge>
+                    {offer.dealNotes ?? 'None'}
                   </TableCell>
                 </TableRow>
               ))}
@@ -85,29 +73,34 @@ export function BuyersPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Affiliate</TableHead>
-                <TableHead>Trust Tier</TableHead>
-                <TableHead>Offer</TableHead>
-                <TableHead>Payout / Call</TableHead>
+                <TableHead>Brand</TableHead>
+                <TableHead>Campaign</TableHead>
+                <TableHead>Our Revenue</TableHead>
+                <TableHead>Affiliate Payout</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {affiliatePayouts.map((payout) => {
-                const affiliate = affiliateById[payout.affiliateId]
-                const offer = offerById[payout.offerId]
-                return (
-                  <TableRow key={payout.id}>
-                    <TableCell className="font-medium">{affiliate?.name}</TableCell>
-                    <TableCell>
-                      <Badge variant={affiliate?.trustTier === 'forms_enabled' ? 'default' : 'muted'}>
-                        {affiliate?.trustTier === 'forms_enabled' ? 'Forms Enabled' : 'Calls Only'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{offer?.campaign}</TableCell>
-                    <TableCell className="font-medium">{formatCurrency(payout.payoutPerCall)}</TableCell>
-                  </TableRow>
-                )
-              })}
+              {withAffiliatePayout.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={4} className="py-8 text-center text-muted-foreground">
+                    No affiliate payout terms set yet.
+                  </TableCell>
+                </TableRow>
+              )}
+              {withAffiliatePayout.map((offer) => (
+                <TableRow key={offer.id}>
+                  <TableCell className="font-medium">{offer.brand}</TableCell>
+                  <TableCell className="max-w-xs whitespace-normal">{offer.campaign}</TableCell>
+                  <TableCell>{offer.revenuePerCallDisplay ?? 'Not set'}</TableCell>
+                  <TableCell>
+                    {offer.affiliatePayoutLink!.startsWith('http') ? (
+                      <LinkChip href={offer.affiliatePayoutLink!} label="Payout sheet" />
+                    ) : (
+                      offer.affiliatePayoutLink
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>
@@ -123,8 +116,8 @@ export function BuyersPage() {
               Buyer Pricing Reference (eLocal)
             </CardTitle>
             <p className="text-xs text-muted-foreground">
-              70/30 revenue share, fixed price per zip code, updated weekly by the buyer. Not yet wired
-              in. Coming soon.
+              70/30 revenue share, fixed price per zip code, updated weekly by the buyer. That's a separate
+              external spreadsheet we don't have access to yet. Coming soon.
             </p>
           </div>
         </CardHeader>

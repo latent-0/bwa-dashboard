@@ -1,19 +1,23 @@
 export type OfferStatus = 'red' | 'yellow' | 'green'
 
-export type RolloutStage = 'category_page' | 'state_video' | 'zip_targeting'
-
 /**
- * One row per Brand + Campaign. Mirrors the real "Inventory Draft" tab of the
- * Video Tracker workbook, plus the extra fields Jeff described verbally in the
- * 2026-09-25 team call (payouts, deal notes, offer kit, creatives, etc.) that
- * live on the same row in the source sheet.
+ * One row per Brand + Campaign, parsed directly from the real "Inventory
+ * Draft" tab of the Video Tracker workbook. Most signal fields are
+ * genuinely blank in the source sheet for most rows, only a handful of
+ * offers have Ringba, a buyer, or a negotiated rate filled in so far.
  */
 export interface Offer {
   id: string
   brand: string
   campaign: string
-  category: string
-  landingPageUrl: string
+
+  productionStage: string | null
+  finalVideoLabel: string | null
+  finalVideoLink: string | null
+  notes: string | null
+
+  landingPageUrl: string | null
+  landingPageMissing: boolean
   copyrightSubmittedDate: string | null
 
   ringbaNumberPoolSetup: boolean
@@ -23,25 +27,27 @@ export interface Offer {
   pioneerBuyerLink: string | null
 
   revenuePerCall: number
-  revenuePerCallDisplay: string
+  revenuePerCallDisplay: string | null
 
-  mediaKitMade: boolean
   mediaKitLink: string | null
   mediaKitSentToPubs: boolean
 
-  offerKitMade: boolean
+  affiliatePayoutLink: string | null
+  dealNotes: string | null
+
   offerKitLink: string | null
+  buyerProspectListLink: string | null
+  buyerOutreachNote: string | null
 
-  outreachSequenceSent: boolean
+  manualGreenFlag: boolean // Jeff's own "ONE CALL! Light it up green!!!" column
 
-  creativesMade: boolean
   creativesLink: string | null
-
-  videoAdsMade: boolean
   videoAdsLink: string | null
 
-  dealNotes: string | null
-  rolloutStage: RolloutStage | null
+  newLandingPageUrl: string | null
+  updatedLandingPageProductionLink: string | null
+  updatedLandingPageReviewLink: string | null
+  jeffLandingPageFeedback: string | null
 
   lastUpdated: string
 }

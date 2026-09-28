@@ -32,6 +32,10 @@ function ToggleCell({ value, onToggle }: { value: boolean; onToggle: () => void 
   )
 }
 
+function LinkOrDash({ href, label, notSetLabel = 'Not set' }: { href: string | null; label: string; notSetLabel?: string }) {
+  return href ? <LinkChip href={href} label={label} /> : <span className="text-muted-foreground">{notSetLabel}</span>
+}
+
 export function InventoryTrackerPage() {
   const { offers, updateOffer, hasEdits, resetToSample } = useOffers()
   const [search, setSearch] = useState('')
@@ -68,12 +72,23 @@ export function InventoryTrackerPage() {
       key: 'campaign',
       header: 'Campaign',
       sortAccessor: (r) => r.offer.campaign,
-      render: (r) => r.offer.campaign,
+      render: (r) => <span className="block max-w-xs whitespace-normal">{r.offer.campaign}</span>,
+    },
+    {
+      key: 'productionStage',
+      header: 'Production Stage',
+      sortAccessor: (r) => r.offer.productionStage ?? '',
+      render: (r) => r.offer.productionStage ?? <span className="text-muted-foreground">Not set</span>,
     },
     {
       key: 'landingPageUrl',
       header: 'Landing Page',
-      render: (r) => <LinkChip href={r.offer.landingPageUrl} label="View LP" />,
+      render: (r) =>
+        r.offer.landingPageUrl ? (
+          <LinkChip href={r.offer.landingPageUrl} label="View LP" />
+        ) : (
+          <span className="text-status-red">{r.offer.landingPageMissing ? 'Not found' : 'Not set'}</span>
+        ),
     },
     {
       key: 'copyrightSubmittedDate',
@@ -115,24 +130,23 @@ export function InventoryTrackerPage() {
             r.offer.pioneerBuyerName
           )
         ) : (
-          <span className="text-muted-foreground">Not set</span>
+          <LinkOrDash href={r.offer.pioneerBuyerLink} label="Buyer sheet" />
         ),
     },
     {
       key: 'revenuePerCall',
       header: 'Our Revenue',
       sortAccessor: (r) => r.offer.revenuePerCall,
-      render: (r) => <span className="font-medium">{r.offer.revenuePerCallDisplay}</span>,
+      render: (r) => (
+        <span className="font-medium">
+          {r.offer.revenuePerCallDisplay ?? <span className="font-normal text-muted-foreground">Not set</span>}
+        </span>
+      ),
     },
     {
-      key: 'mediaKitMade',
+      key: 'mediaKitLink',
       header: 'Media Kit',
-      render: (r) =>
-        r.offer.mediaKitMade && r.offer.mediaKitLink ? (
-          <LinkChip href={r.offer.mediaKitLink} label="Media Kit" />
-        ) : (
-          <span className="text-muted-foreground">Not made</span>
-        ),
+      render: (r) => <LinkOrDash href={r.offer.mediaKitLink} label="Media Kit" notSetLabel="Not made" />,
     },
     {
       key: 'mediaKitSentToPubs',
@@ -152,11 +166,11 @@ export function InventoryTrackerPage() {
     <div className="flex flex-col gap-6">
       <PageHeader
         title="Inventory Tracker"
-        description="The full working record. Click any green or red circle to update it and status recalculates instantly for everyone."
+        description="The full working record, parsed directly from the real Inventory Draft sheet. Click any green or red circle to update it and status recalculates instantly for everyone."
         actions={
           hasEdits ? (
             <Button variant="outline" size="sm" onClick={resetToSample} className="gap-1.5">
-              <RotateCcw className="h-3.5 w-3.5" /> Reset sample data
+              <RotateCcw className="h-3.5 w-3.5" /> Reset to sheet data
             </Button>
           ) : undefined
         }

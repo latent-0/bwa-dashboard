@@ -11,9 +11,9 @@ import type { Offer } from '@/types/offer'
 
 function FlagRow({ offer }: { offer: Offer }) {
   const flags = [
-    { label: 'Creatives', done: offer.creativesMade },
-    { label: 'Video Ads', done: offer.videoAdsMade },
-    { label: 'Outreach Sent', done: offer.outreachSequenceSent },
+    { label: 'Creatives', done: Boolean(offer.creativesLink) },
+    { label: 'Video Ads', done: Boolean(offer.videoAdsLink) },
+    { label: 'Outreach Sent', done: Boolean(offer.buyerOutreachNote) },
   ]
   return (
     <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
@@ -67,8 +67,8 @@ function AssetCard({
 
 export function MediaKitsPage() {
   const { offers } = useOffers()
-  const mediaKitOffers = offers.filter((o) => o.mediaKitMade && o.mediaKitLink)
-  const offerKitOffers = offers.filter((o) => o.offerKitMade && o.offerKitLink)
+  const mediaKitOffers = offers.filter((o) => o.mediaKitLink)
+  const offerKitOffers = offers.filter((o) => o.offerKitLink)
 
   return (
     <div className="flex flex-col gap-6">
@@ -98,7 +98,7 @@ export function MediaKitsPage() {
         <TabsContent value="offer-kits">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {offerKitOffers.map((offer) => (
-              <AssetCard key={offer.id} offer={offer} link={offer.offerKitLink!} sent={offer.outreachSequenceSent} />
+              <AssetCard key={offer.id} offer={offer} link={offer.offerKitLink!} sent={Boolean(offer.buyerOutreachNote)} />
             ))}
           </div>
         </TabsContent>

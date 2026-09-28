@@ -18,7 +18,7 @@ export function OfferCard({ offer, status }: { offer: Offer; status: OfferStatus
   const [assistantOpen, setAssistantOpen] = useState(false)
   const hasBuyer = Boolean(offer.pioneerBuyerName || offer.pioneerBuyerLink)
   const meta = STATUS_META[status]
-  const domain = getHostname(offer.landingPageUrl)
+  const domain = offer.landingPageUrl ? getHostname(offer.landingPageUrl) : offer.landingPageMissing ? 'not found' : 'no landing page'
 
   return (
     <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
@@ -39,21 +39,27 @@ export function OfferCard({ offer, status }: { offer: Offer; status: OfferStatus
       />
 
       <div className="flex flex-1 flex-col gap-3 px-4 pb-4 pt-8 text-center">
-        <a
-          href={offer.landingPageUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="mx-auto inline-flex items-center gap-1 rounded-full bg-foreground px-2.5 py-0.5 text-[11px] font-semibold text-background shadow-sm transition-transform hover:-translate-y-0.5"
-        >
-          {domain}
-          <ExternalLink className="h-2.5 w-2.5" />
-        </a>
+        {offer.landingPageUrl ? (
+          <a
+            href={offer.landingPageUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mx-auto inline-flex items-center gap-1 rounded-full bg-foreground px-2.5 py-0.5 text-[11px] font-semibold text-background shadow-sm transition-transform hover:-translate-y-0.5"
+          >
+            {domain}
+            <ExternalLink className="h-2.5 w-2.5" />
+          </a>
+        ) : (
+          <span className="mx-auto inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-0.5 text-[11px] font-semibold text-muted-foreground">
+            {domain}
+          </span>
+        )}
 
         <div>
           <h4 className="truncate font-heading text-sm font-semibold" title={offer.campaign}>
             {offer.campaign}
           </h4>
-          <p className="truncate text-xs text-muted-foreground">{offer.revenuePerCallDisplay}</p>
+          <p className="truncate text-xs text-muted-foreground">{offer.revenuePerCallDisplay ?? 'Rate not set'}</p>
         </div>
 
         <div className="flex items-center justify-center gap-2">

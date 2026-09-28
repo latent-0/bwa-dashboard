@@ -28,8 +28,9 @@ export function VideoTrackerPage() {
     [offers],
   )
 
-  const videoAdsCount = offers.filter((o) => o.videoAdsMade).length
+  const videoAdsCount = offers.filter((o) => o.videoAdsLink).length
   const readyCount = offers.filter((o) => o.campaignReady).length
+  const approvedCount = offers.filter((o) => o.productionStage === 'Approved').length
 
   const columns: DataTableColumn<{ offer: Offer; status: OfferStatus }>[] = [
     {
@@ -48,12 +49,35 @@ export function VideoTrackerPage() {
       key: 'campaign',
       header: 'Campaign',
       sortAccessor: (r) => r.offer.campaign,
-      render: (r) => r.offer.campaign,
+      render: (r) => <span className="block max-w-xs whitespace-normal">{r.offer.campaign}</span>,
+    },
+    {
+      key: 'productionStage',
+      header: 'Production Stage',
+      sortAccessor: (r) => r.offer.productionStage ?? '',
+      render: (r) => r.offer.productionStage ?? <span className="text-muted-foreground">Not set</span>,
+    },
+    {
+      key: 'finalVideoLabel',
+      header: 'Final Video',
+      render: (r) =>
+        r.offer.finalVideoLink ? (
+          <LinkChip href={r.offer.finalVideoLink} label="Watch" />
+        ) : (
+          <span className="block max-w-[12rem] truncate text-muted-foreground">
+            {r.offer.finalVideoLabel ?? 'Not set'}
+          </span>
+        ),
     },
     {
       key: 'landingPageUrl',
       header: 'Landing Page',
-      render: (r) => <LinkChip href={r.offer.landingPageUrl} label="View LP" />,
+      render: (r) =>
+        r.offer.landingPageUrl ? (
+          <LinkChip href={r.offer.landingPageUrl} label="View LP" />
+        ) : (
+          <span className="text-status-red">{r.offer.landingPageMissing ? 'Not found' : 'Not set'}</span>
+        ),
     },
     {
       key: 'campaignReady',
@@ -61,13 +85,13 @@ export function VideoTrackerPage() {
       render: (r) => <BooleanCell value={r.offer.campaignReady} />,
     },
     {
-      key: 'videoAdsMade',
+      key: 'videoAdsLink',
       header: 'Video Ads Made',
       render: (r) =>
-        r.offer.videoAdsMade && r.offer.videoAdsLink ? (
+        r.offer.videoAdsLink ? (
           <LinkChip href={r.offer.videoAdsLink} label="Video Ads" />
         ) : (
-          <BooleanCell value={r.offer.videoAdsMade} />
+          <BooleanCell value={false} />
         ),
     },
     {
@@ -86,8 +110,9 @@ export function VideoTrackerPage() {
         description="Landing page and video readiness across every offer, framed around what's needed before it can go live."
       />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
         <KpiCard label="Total Campaigns" value={offers.length} />
+        <KpiCard label="Video Approved" value={approvedCount} />
         <KpiCard label="LP + Video Ready" value={readyCount} />
         <KpiCard label="Video Ads Made" value={videoAdsCount} />
       </div>

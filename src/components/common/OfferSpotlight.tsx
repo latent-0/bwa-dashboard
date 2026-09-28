@@ -19,8 +19,8 @@ export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferS
   const hasBuyer = Boolean(offer.pioneerBuyerName || offer.pioneerBuyerLink)
   const missing = missingSignals(offer)
   const meta = STATUS_META[status]
-  const domain = getHostname(offer.landingPageUrl)
-  const maxRevenue = Math.max(...offers.map((o) => o.revenuePerCall))
+  const domain = offer.landingPageUrl ? getHostname(offer.landingPageUrl) : offer.landingPageMissing ? 'Landing page not found' : 'No landing page yet'
+  const maxRevenue = Math.max(1, ...offers.map((o) => o.revenuePerCall))
   const revenueBarWidth = Math.round((offer.revenuePerCall / maxRevenue) * 100)
   const signalsDone = [offer.ringbaNumberPoolSetup, offer.campaignReady, hasBuyer].filter(Boolean).length
 
@@ -37,15 +37,21 @@ export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferS
             </span>
           }
           topRight={
-            <a
-              href={offer.landingPageUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25"
-              title="Open landing page"
-            >
-              <ExternalLink className="h-4 w-4" />
-            </a>
+            offer.landingPageUrl ? (
+              <a
+                href={offer.landingPageUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25"
+                title="Open landing page"
+              >
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            ) : (
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/40">
+                <ExternalLink className="h-4 w-4" />
+              </span>
+            )
           }
           badge={
             <span
@@ -60,21 +66,27 @@ export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferS
         />
 
         <div className="flex flex-col items-center pb-2 pt-11 text-center">
-          <a
-            href={offer.landingPageUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1 rounded-full bg-foreground px-3 py-1 text-xs font-semibold text-background shadow-sm transition-transform hover:-translate-y-0.5"
-          >
-            {domain}
-          </a>
+          {offer.landingPageUrl ? (
+            <a
+              href={offer.landingPageUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 rounded-full bg-foreground px-3 py-1 text-xs font-semibold text-background shadow-sm transition-transform hover:-translate-y-0.5"
+            >
+              {domain}
+            </a>
+          ) : (
+            <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+              {domain}
+            </span>
+          )}
         </div>
 
         <div className="flex flex-col gap-4 px-5 pb-5">
           <div className="text-center">
             <h3 className="font-heading text-lg font-semibold">{offer.campaign}</h3>
             <p className="text-sm text-muted-foreground">
-              {offer.brand}, {offer.revenuePerCallDisplay}
+              {offer.brand}, {offer.revenuePerCallDisplay ?? 'rate not set'}
             </p>
           </div>
 
@@ -113,7 +125,9 @@ export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferS
       <div className="flex flex-col gap-4">
         <Card className="p-5">
           <p className="text-sm font-medium text-muted-foreground">Revenue at Stake</p>
-          <p className="mt-1 font-heading text-2xl font-semibold">{offer.revenuePerCallDisplay}</p>
+          <p className="mt-1 font-heading text-2xl font-semibold">
+            {offer.revenuePerCallDisplay ?? <span className="text-muted-foreground">Not negotiated yet</span>}
+          </p>
           <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-muted">
             <div
               className="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-700 transition-all duration-700 ease-out"

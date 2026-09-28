@@ -23,8 +23,7 @@ export function Sidebar() {
       </nav>
 
       <div className="rounded-2xl bg-muted px-3.5 py-3 text-xs leading-relaxed text-muted-foreground">
-        Live view of the Video Tracker workbook. Inventory Draft is fully wired up, other tabs wait under
-        More Tabs.
+        Live view of the real Video Tracker workbook. All 10 tabs are wired up.
       </div>
     </aside>
   )
