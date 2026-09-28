@@ -7,6 +7,7 @@ import { STATUS_META, missingSignals } from '@/lib/status'
 import { cn, getHostname } from '@/lib/utils'
 import type { Offer, OfferStatus } from '@/types/offer'
 
+import { HeroNotch } from './HeroNotch'
 import { SignalTile } from './SignalIndicator'
 
 export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferStatus }) {
@@ -22,13 +23,17 @@ export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferS
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
       <Card className="overflow-hidden lg:col-span-2">
-        <div className="relative h-32 overflow-hidden bg-gradient-to-br from-brand-600 via-brand-700 to-burgundy-700">
-          <div className="absolute -right-10 -top-16 h-40 w-40 rounded-full bg-burgundy-400/30 blur-2xl" />
-          <div className="absolute -left-6 bottom-0 h-28 w-28 rounded-full bg-brand-300/20 blur-2xl" />
-          <div className="relative flex items-center justify-between p-4">
+        <HeroNotch
+          heightClass="h-32"
+          avatarSize={72}
+          filletSize={18}
+          initial={offer.brand.charAt(0)}
+          topLeft={
             <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15 text-white backdrop-blur">
               <Radio className="h-4 w-4" />
             </span>
+          }
+          topRight={
             <a
               href={offer.landingPageUrl}
               target="_blank"
@@ -38,19 +43,18 @@ export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferS
             >
               <ExternalLink className="h-4 w-4" />
             </a>
-          </div>
-          <span className={cn('absolute right-4 top-16 rounded-full border px-2.5 py-0.5 text-xs font-medium', meta.badgeClass)}>
-            {meta.label}
-          </span>
-        </div>
-
-        <div className="relative flex justify-center">
-          <div className="absolute -top-9 flex flex-col items-center">
-            <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full border-4 border-card bg-brand-50 font-heading text-2xl font-semibold text-brand-700 shadow-md">
-              {offer.brand.charAt(0)}
-            </div>
-          </div>
-        </div>
+          }
+          badge={
+            <span
+              className={cn(
+                'absolute right-4 top-16 rounded-full border px-2.5 py-0.5 text-xs font-medium',
+                meta.badgeClass,
+              )}
+            >
+              {meta.label}
+            </span>
+          }
+        />
 
         <div className="flex flex-col items-center pb-2 pt-11 text-center">
           <a

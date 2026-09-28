@@ -7,6 +7,7 @@ import { STATUS_META } from '@/lib/status'
 import { cn, getHostname } from '@/lib/utils'
 import type { Offer, OfferStatus } from '@/types/offer'
 
+import { HeroNotch } from './HeroNotch'
 import { SignalDot } from './SignalIndicator'
 
 export function OfferCard({ offer, status }: { offer: Offer; status: OfferStatus }) {
@@ -17,23 +18,22 @@ export function OfferCard({ offer, status }: { offer: Offer; status: OfferStatus
 
   return (
     <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-      <div className="relative h-14 overflow-hidden bg-gradient-to-br from-brand-600 via-brand-700 to-burgundy-700">
-        <div className="absolute -right-6 -top-8 h-20 w-20 rounded-full bg-burgundy-400/30 blur-xl" />
-        <div className="relative flex items-center justify-between p-2.5">
+      <HeroNotch
+        heightClass="h-14"
+        avatarSize={48}
+        filletSize={10}
+        initial={offer.brand.charAt(0)}
+        topLeft={
           <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-white/15 text-white backdrop-blur">
             <Radio className="h-3 w-3" />
           </span>
+        }
+        topRight={
           <span className={cn('rounded-full border px-2 py-0.5 text-[10px] font-medium', meta.badgeClass)}>
             {meta.label}
           </span>
-        </div>
-      </div>
-
-      <div className="relative flex justify-center">
-        <div className="absolute -top-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-card bg-brand-50 font-heading text-base font-semibold text-brand-700 shadow-md">
-          {offer.brand.charAt(0)}
-        </div>
-      </div>
+        }
+      />
 
       <div className="flex flex-1 flex-col gap-3 px-4 pb-4 pt-8 text-center">
         <a
