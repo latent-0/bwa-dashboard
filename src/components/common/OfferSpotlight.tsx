@@ -26,7 +26,6 @@ export function OfferSpotlight({ offer, status }: { offer: Offer; status: OfferS
         <HeroNotch
           heightClass="h-32"
           avatarSize={72}
-          filletSize={18}
           initial={offer.brand.charAt(0)}
           topLeft={
             <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15 text-white backdrop-blur">

@@ -21,7 +21,6 @@ export function OfferCard({ offer, status }: { offer: Offer; status: OfferStatus
       <HeroNotch
         heightClass="h-14"
         avatarSize={48}
-        filletSize={10}
         initial={offer.brand.charAt(0)}
         topLeft={
           <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-white/15 text-white backdrop-blur">
